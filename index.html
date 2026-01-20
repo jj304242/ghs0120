@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시인의 발자취: 윤동주의 1941년 서울</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #292524; /* stone-800 */
+        }
+        
+        h1, h2, h3, .serif-font {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            max-height: 400px;
+            margin: 0 auto;
+        }
+
+        .nav-item.active {
+            border-bottom: 3px solid #78350f; /* amber-900 */
+            color: #78350f;
+            font-weight: 700;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #78350f;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <!-- Chosen Palette: Warm Paper & Ink (Stone background, Amber accents, Slate text) -->
+    <!-- Application Structure Plan: A 'Digital Field Guide' structure. Added ✨ AI Insight (Gemini API) and visual route map to facilitate spatial and emotional understanding of Yun Dong-ju's 1941 Seoul. -->
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-stone-200 border-b border-stone-300 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-stone-800 serif-font">시인의 발자취</h1>
+                <p class="text-sm text-stone-600 mt-1">윤동주의 1941년 서울, 그 길을 걷다</p>
+            </div>
+            <button id="menu-toggle" onclick="toggleMobileMenu()" class="md:hidden text-2xl text-stone-800">☰</button>
+        </div>
+        <!-- Navigation -->
+        <nav id="main-nav" class="max-w-4xl mx-auto px-4 overflow-x-auto no-scrollbar hidden md:block">
+            <ul class="flex space-x-8 text-stone-500 whitespace-nowrap pb-2">
+                <li><button onclick="navigateTo('intro')" class="nav-item py-2 hover:text-stone-800 transition-colors active" data-target="intro">답사 시작</button></li>
+                <li><button onclick="navigateTo('course1')" class="nav-item py-2 hover:text-stone-800 transition-colors" data-target="course1">코스 1: 누상동 하숙집</button></li>
+                <li><button onclick="navigateTo('course2')" class="nav-item py-2 hover:text-stone-800 transition-colors" data-target="course2">코스 2: 전차의 길</button></li>
+                <li><button onclick="navigateTo('course3')" class="nav-item py-2 hover:text-stone-800 transition-colors" data-target="course3">코스 3: 통학 기차</button></li>
+                <li><button onclick="navigateTo('ai-hub')" class="nav-item py-2 hover:text-stone-800 transition-colors" data-target="ai-hub">✨ AI 체험 센터</button></li>
+                <li><button onclick="navigateTo('activities')" class="nav-item py-2 hover:text-stone-800 transition-colors" data-target="activities">학생 활동</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden bg-stone-100 border-b border-stone-300 md:hidden">
+        <ul class="flex flex-col p-4 space-y-2">
+            <li><button onclick="navigateTo('intro'); toggleMobileMenu()" class="block w-full text-left py-2 px-4 rounded hover:bg-stone-200">답사 시작</button></li>
+            <li><button onclick="navigateTo('course1'); toggleMobileMenu()" class="block w-full text-left py-2 px-4 rounded hover:bg-stone-200">코스 1: 누상동 하숙집</button></li>
+            <li><button onclick="navigateTo('course2'); toggleMobileMenu()" class="block w-full text-left py-2 px-4 rounded hover:bg-stone-200">코스 2: 전차의 길</button></li>
+            <li><button onclick="navigateTo('course3'); toggleMobileMenu()" class="block w-full text-left py-2 px-4 rounded hover:bg-stone-200">코스 3: 통학 기차</button></li>
+            <li><button onclick="navigateTo('ai-hub'); toggleMobileMenu()" class="block w-full text-left py-2 px-4 rounded hover:bg-stone-200">✨ AI 체험 센터</button></li>
+            <li><button onclick="navigateTo('activities'); toggleMobileMenu()" class="block w-full text-left py-2 px-4 rounded hover:bg-stone-200">학생 활동</button></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+        
+        <!-- SECTION: INTRO -->
+        <section id="intro" class="fade-in">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200 mb-8">
+                <h2 class="text-2xl font-bold mb-4 serif-font text-stone-800">1941년, 시가 흐르는 서울로의 초대</h2>
+                <p class="text-lg leading-relaxed text-stone-700 mb-6">
+                    본 프로젝트는 1941년, 윤동주 시인이 머물렀던 서촌 누상동 하숙집부터 연희전문학교 등굣길까지의 여정을 담고 있습니다. 시인의 발자취를 따라 걸으며 역사와 문학을 동시에 체험해 보세요.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                    <div class="bg-stone-50 p-4 rounded text-center border border-stone-200 cursor-pointer hover:bg-stone-100 transition" onclick="navigateTo('course1')">
+                        <div class="text-3xl mb-2">🏠</div>
+                        <h3 class="font-bold text-stone-800">코스 1: 누상동</h3>
+                        <p class="text-sm text-stone-600">문학의 요람</p>
+                    </div>
+                    <div class="bg-stone-50 p-4 rounded text-center border border-stone-200 cursor-pointer hover:bg-stone-100 transition" onclick="navigateTo('course2')">
+                        <div class="text-3xl mb-2">🚋</div>
+                        <h3 class="font-bold text-stone-800">코스 2: 전차길</h3>
+                        <p class="text-sm text-stone-600">종점과 시점</p>
+                    </div>
+                    <div class="bg-stone-50 p-4 rounded text-center border border-stone-200 cursor-pointer hover:bg-stone-100 transition" onclick="navigateTo('course3')">
+                        <div class="text-3xl mb-2">🚂</div>
+                        <h3 class="font-bold text-stone-800">코스 3: 통학길</h3>
+                        <p class="text-sm text-stone-600">희망과 비극</p>
+                    </div>
+                </div>
+
+                <!-- MAIN IMAGE 1 -->
+                <div class="mt-10">
+                    <img src="https://postfiles.pstatic.net/MjAyNTA3MjNfMTg1/MDAxNzUzMjMwNDg5NTQ5.z1C1PXlAZQ94e2O5X8z-Du8Iu0wP_XuPE4D6SRKpXlsg.VCiA-zp81IP3n8hfgDKjRGcNn078gE6QPKcfxf_lWkYg.JPEG/%EC%9C%A4%EB%8F%99%EC%A3%BC%EB%AC%B8%ED%95%99%EA%B4%80_%EC%9D%B8%EC%99%95%EC%82%B0%EC%9E%90%EB%9D%BD%EA%B8%B8.jpg?type=w966" 
+                         alt="윤동주 문학관 및 인왕산 자락길 풍경" 
+                         class="w-full h-auto rounded-lg shadow-md border border-stone-200">
+                    <p class="text-xs text-stone-500 mt-2 text-right italic">윤동주 문학관 및 인왕산 자락길 전경</p>
+                </div>
+
+                <!-- ROUTE MAP IMAGE 2 (Newly Added) -->
+                <div class="mt-8 border-t border-stone-100 pt-8">
+                    <h3 class="text-lg font-bold mb-4 text-stone-800 flex items-center">
+                        <span class="mr-2">📍</span> 답사 경로 상세 지도
+                    </h3>
+                    <img src="https://github.com/jj304242/ghs0120/blob/main/1.png?raw=true" 
+                         alt="윤동주 서울 답사 경로 지도" 
+                         class="w-full h-auto rounded-lg shadow-md border border-stone-200"
+                         onerror="this.src='https://via.placeholder.com/800x600?text=지도를+불러올+수+없습니다';">
+                    <p class="text-xs text-stone-500 mt-2 text-right italic">서촌에서 연희까지: 시인의 등굣길 노선</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: AI HUB (✨ Gemini Integration) -->
+        <section id="ai-hub" class="hidden fade-in">
+            <div class="border-l-4 border-amber-800 pl-4 mb-6">
+                <h2 class="text-2xl font-bold serif-font text-stone-800">✨ AI 체험 센터</h2>
+                <p class="text-amber-900 font-medium">Gemini AI를 통해 시인의 시대를 더욱 입체적으로 경험합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8">
+                <!-- AI Poet Chat -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="mr-2">💬</span> 시인과 마음 나누기
+                    </h3>
+                    <div id="chat-box" class="h-64 overflow-y-auto mb-4 bg-stone-50 p-4 rounded border border-stone-200 space-y-3">
+                        <div class="text-stone-500 text-sm italic">시인 윤동주에게 궁금한 점을 물어보세요. (예: "누상동 하숙집은 어떤가요?")</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="chat-input" class="flex-grow p-2 border border-stone-300 rounded focus:ring-2 ring-amber-500 outline-none" placeholder="질문을 입력하세요...">
+                        <button onclick="askAI()" id="chat-btn" class="bg-amber-800 text-white px-6 py-2 rounded hover:bg-amber-900 transition flex items-center gap-2">
+                            <span>✨ 질문하기</span>
+                            <div id="chat-loader" class="spinner hidden"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI Image Generation -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="mr-2">🎨</span> 1941년 경성 스케치
+                    </h3>
+                    <p class="text-sm text-stone-600 mb-4">시인의 눈에 비쳤을 당시의 풍경을 AI로 그려봅니다. (예: "눈 내리는 밤의 효자동 전차 정류장")</p>
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="image-prompt" class="flex-grow p-2 border border-stone-300 rounded outline-none" placeholder="풍경 묘사를 입력하세요...">
+                        <button onclick="generateAIImage()" id="image-btn" class="bg-stone-700 text-white px-6 py-2 rounded hover:bg-stone-800 transition flex items-center gap-2">
+                            <span>✨ 이미지 생성</span>
+                            <div id="image-loader" class="spinner hidden"></div>
+                        </button>
+                    </div>
+                    <div id="image-result" class="min-h-[300px] border-2 border-dashed border-stone-200 rounded flex items-center justify-center bg-stone-50 relative">
+                        <div class="text-stone-400">생성된 이미지가 여기에 표시됩니다.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: COURSE 1 -->
+        <section id="course1" class="hidden fade-in">
+            <div class="border-l-4 border-amber-800 pl-4 mb-6">
+                <h2 class="text-2xl font-bold serif-font text-stone-800">코스 1: 누상동 하숙집</h2>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200 mb-6">
+                <p class="text-stone-700 leading-relaxed">
+                    1941년 5월~9월, 시인이 정병욱과 함께 머물며 대표작 9편을 집필한 곳입니다.
+                </p>
+                <div class="mt-6">
+                    <div class="chart-container">
+                        <canvas id="nusangChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: COURSE 2 -->
+        <section id="course2" class="hidden fade-in">
+            <div class="border-l-4 border-stone-600 pl-4 mb-6">
+                <h2 class="text-2xl font-bold serif-font text-stone-800">코스 2: 효자동 종점 ~ 광화문</h2>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200 mb-6">
+                <p class="text-stone-700 leading-relaxed">전차의 종점이자 기차의 시점이 되는 경성역까지의 길입니다.</p>
+                <div class="mt-6">
+                    <div class="chart-container">
+                        <canvas id="tramChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: COURSE 3 -->
+        <section id="course3" class="hidden fade-in">
+            <div class="border-l-4 border-blue-900 pl-4 mb-6">
+                <h2 class="text-2xl font-bold serif-font text-stone-800">코스 3: 경성역 ~ 연희역</h2>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200 mb-6">
+                <p class="text-stone-700 leading-relaxed">터널을 지나 학교로 향하며 시대의 고통을 목격한 길입니다.</p>
+                <div class="mt-6">
+                    <div class="chart-container">
+                        <canvas id="commuteChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ACTIVITIES -->
+        <section id="activities" class="hidden fade-in">
+            <div class="border-l-4 border-green-700 pl-4 mb-6">
+                <h2 class="text-2xl font-bold serif-font text-stone-800">학생 활동</h2>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3">
+                        <input type="checkbox" class="w-5 h-5"> 
+                        <span>누상동 하숙집 터에서 시 낭송하기</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <input type="checkbox" class="w-5 h-5"> 
+                        <span>✨ AI 체험 센터에서 시인과 대화한 내용을 기록하기</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-stone-400 py-8 mt-auto text-center">
+        <p class="serif-font text-lg mb-2">"종점이 시점이 된다. 다시 시점이 종점이 된다."</p>
+        <p class="text-xs text-stone-600">© 2026 윤동주 서울 답사 프로젝트</p>
+    </footer>
+
+    <script>
+        const apiKey = "";
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Helper: Exponential Backoff Retry
+        async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                if (retries <= 0) throw error;
+                await new Promise(resolve => setTimeout(resolve, delay));
+                return fetchWithRetry(url, options, retries - 1, delay * 2);
+            }
+        }
+
+        // Feature 1: AI Chat (Text Generation)
+        async function askAI() {
+            const input = document.getElementById('chat-input');
+            const box = document.getElementById('chat-box');
+            const loader = document.getElementById('chat-loader');
+            const query = input.value.trim();
+            if (!query) return;
+
+            // Update UI
+            appendMessage('User', query);
+            input.value = "";
+            loader.classList.remove('hidden');
+
+            const systemPrompt = `당신은 1941년 서울 누상동 하숙집에 살고 있는 25세 청년 시인 윤동주입니다. 
+            식민지 지식인으로서의 부끄러움, 연희전문학교 학생으로서의 일상, 벗 정병욱에 대한 애정, 
+            인왕산 수성동 계곡 산책의 즐거움 등을 바탕으로 1인칭 시점으로 정중하고 성찰적인 어투로 답하세요. 
+            시대적 배경은 태평양 전쟁이 발발하기 직전의 긴장된 분위기를 반영합니다.`;
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: query }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "죄송합니다, 잠시 고뇌에 빠졌나 봅니다.";
+                appendMessage('Poet', text);
+            } catch (err) {
+                appendMessage('Error', '연결에 실패했습니다. 나중에 다시 시도해 주세요.');
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        function appendMessage(role, text) {
+            const box = document.getElementById('chat-box');
+            const div = document.createElement('div');
+            div.className = role === 'User' ? 'text-right' : 'text-left';
+            const span = document.createElement('div');
+            span.className = `inline-block p-2 rounded-lg text-sm ${role === 'User' ? 'bg-amber-100 text-amber-900' : (role === 'Error' ? 'bg-red-50 text-red-800' : 'bg-stone-200 text-stone-800')}`;
+            span.innerText = `${role === 'Poet' ? '동주: ' : ''}${text}`;
+            div.appendChild(span);
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        // Feature 2: AI Image (Image Generation)
+        async function generateAIImage() {
+            const promptInput = document.getElementById('image-prompt');
+            const resultBox = document.getElementById('image-result');
+            const loader = document.getElementById('image-loader');
+            const prompt = promptInput.value.trim();
+            if (!prompt) return;
+
+            loader.classList.remove('hidden');
+            resultBox.innerHTML = '<div class="text-stone-400">시대를 그리는 중입니다...</div>';
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+            const fullPrompt = `Vintage black and white photography style, 1941 Seoul Gyeongseong Korea, historical accuracy, cinematic lighting, ${prompt}`;
+            const payload = {
+                instances: { prompt: fullPrompt },
+                parameters: { sampleCount: 1 }
+            };
+
+            try {
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const imageUrl = `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}`;
+                resultBox.innerHTML = `<img src="${imageUrl}" class="w-full h-full object-cover rounded-lg shadow-inner">`;
+            } catch (err) {
+                resultBox.innerHTML = '<div class="text-red-500">이미지 생성에 실패했습니다.</div>';
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        // UI Core Logic
+        function navigateTo(targetId) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(targetId).classList.remove('hidden');
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.target === targetId);
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Charts Initialization
+        function initCharts() {
+            const commonOptions = { responsive: true, maintainAspectRatio: false };
+            
+            new Chart(document.getElementById('nusangChart'), {
+                type: 'polarArea',
+                data: {
+                    labels: ['자연', '우정', '예술', '시대고뇌', '성찰'],
+                    datasets: [{ data: [5, 5, 3, 4, 5], backgroundColor: ['#15803d', '#eab308', '#a855f7', '#64748b', '#3b82f6'] }]
+                },
+                options: commonOptions
+            });
+
+            new Chart(document.getElementById('tramChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['1899', '1910', '1917', '1923'],
+                    datasets: [{ label: '노선 확장 단계', data: [1, 2, 3, 4], backgroundColor: '#78350f' }]
+                },
+                options: commonOptions
+            });
+
+            new Chart(document.getElementById('commuteChart'), {
+                type: 'line',
+                data: {
+                    labels: ['출발', '터널 진입', '공사장', '학교 도착'],
+                    datasets: [{ label: '심리적 중압감', data: [2, 4, 5, 3], borderColor: '#1e3a8a', fill: true }]
+                },
+                options: commonOptions
+            });
+        }
+
+        window.onload = initCharts;
+
+        // Enter key for Chat
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') askAI();
+        });
+    </script>
+</body>
+</html>
